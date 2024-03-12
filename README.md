@@ -24,11 +24,22 @@ import SwiftUI
 
 struct LongPressButtonView: View {
     var body: some View {
-        LongPressButton(action: { (longPress: Bool) in
-            print(longPress)
+        // Example #1
+        LongPressButton(action: {
+            print($0)
         }, label: {
             Text("Press me")
         })
+        
+        // Example #2
+        LongPressButton("Press me") { 
+            print($0)
+        }
+        
+        // Example #3
+        LongPressButton("Press me", systemImage: "chevron.right") { 
+            print($0)
+        }
     }
 }
 ```

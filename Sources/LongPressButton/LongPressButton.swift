@@ -26,7 +26,6 @@ public struct LongPressButton<Label>: View where Label : View {
     
     public var body: some View {
         label()
-            .contentShape(Rectangle())
             .opacity(isPressing ? 0.5 : 1.0)
             .scaleEffect(isPressing ? 0.99 : 1)
             .animation(.default, value: isPressing)
@@ -45,5 +44,34 @@ public struct LongPressButton<Label>: View where Label : View {
             .onChange(of: isPressing) { _ in
                 triggerLongPress = false
             }
+    }
+}
+
+public extension LongPressButton where Label == Text {
+    /// Creates a long press button that generates its label from a localized string key.
+    /// - Parameters:
+    ///   - titleKey: A string for the button's label.
+    ///   - action: An completion handler for long press (and regular) actions. Returns true if action is long press
+    public init(_ titleKey: String, action: @escaping (Bool) -> Void) {
+        self.init(action: action) {
+            Text(titleKey)
+        }
+    }
+}
+
+public extension LongPressButton where Label == HStack<TupleView<(Text, Image?)>> {
+    /// Creates a long press button that generates its label from a localized string key and system image name.
+    /// - Parameters:
+    ///   - titleKey: A string for the button's label.
+    ///   - action: An completion handler for long press (and regular) actions. Returns true if action is long press
+    public init(_ titleKey: String, systemImage: String = "", action: @escaping (Bool) -> Void) {
+        self.init(action: action) {
+            HStack {
+                Text(titleKey)
+                if !systemImage.isEmpty {
+                    Image(systemName: systemImage)
+                }
+            }
+        }
     }
 }
