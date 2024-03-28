@@ -59,7 +59,7 @@ public extension LongPressButton where Label == Text {
     }
 }
 
-public extension LongPressButton where Label == HStack<TupleView<(Text, Image?)>> {
+public extension LongPressButton where Label == HStack<TupleView<(Image?, Text)>> {
     /// Creates a long press button that generates its label from a localized string key and system image name.
     /// - Parameters:
     ///   - titleKey: A string for the button's label.
@@ -67,10 +67,10 @@ public extension LongPressButton where Label == HStack<TupleView<(Text, Image?)>
     public init(_ titleKey: String, systemImage: String = "", action: @escaping (Bool) -> Void) {
         self.init(action: action) {
             HStack {
-                Text(titleKey)
                 if !systemImage.isEmpty {
                     Image(systemName: systemImage)
                 }
+                Text(titleKey)
             }
         }
     }
